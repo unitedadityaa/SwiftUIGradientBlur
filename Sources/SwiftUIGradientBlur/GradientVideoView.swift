@@ -15,7 +15,7 @@ public struct GradientVideoView : View {
     var width: CGFloat
     var style : UIBlurEffect.Style = .dark
     
-    init(player: AVPlayer, height: CGFloat, width: CGFloat, style: UIBlurEffect.Style) {
+    public init(player: AVPlayer, height: CGFloat, width: CGFloat, style: UIBlurEffect.Style) {
         self.player = player
         self.height = height
         self.width = width
