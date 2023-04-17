@@ -1,7 +1,7 @@
 import SwiftUI
 import AVKit
 
-struct GradientImageView : View {
+struct SwiftUIGradientBlur : View {
     var image: Image
     var height: CGFloat
     var width: CGFloat
@@ -22,7 +22,6 @@ struct GradientImageView : View {
                     VisualEffectView(effect: UIBlurEffect(style: blurStyle))
                         .preferredColorScheme(.dark)
                 )
-            
             
             
             image
