@@ -7,25 +7,24 @@
 
 import Foundation
 import SwiftUI
+import AVKit
 
-public struct GradientImageView : View {
-    var image: Image
+public struct GradientVideoView : View {
+    let player: AVPlayer
     var height: CGFloat
     var width: CGFloat
-    var blurStyle : UIBlurEffect.Style = .dark
+    var style : UIBlurEffect.Style = .dark
     
-    public init(image: Image, height: CGFloat, width: CGFloat, blurStyle: UIBlurEffect.Style) {
-        self.image = image
+    init(player: AVPlayer, height: CGFloat, width: CGFloat, style: UIBlurEffect.Style) {
+        self.player = player
         self.height = height
         self.width = width
-        self.blurStyle = blurStyle
+        self.style = style
     }
     
     public var body: some View {
         ZStack(alignment: .bottom){
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fill)
+            VideoPlayerView(player: player)
                 .frame(width: width , height: height)
                 .clipped()
             
@@ -33,31 +32,33 @@ public struct GradientImageView : View {
             VStack{}
                 .frame(width: width , height: height)
                 .background(
-                    VisualEffectView(effect: UIBlurEffect(style: blurStyle))
-                        .preferredColorScheme(.dark)
+                    VisualEffectView(effect: UIBlurEffect(style: style))
                 )
             
             
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fill)
+            VideoPlayerView(player: player)
                 .frame(width: width , height: height)
                 .mask(LinearGradient(stops: [.init(color: .white, location: 0),
                                              .init(color: .white, location: 0.4),
                                              .init(color: .clear, location: 0.80),], startPoint: .top, endPoint: .bottom))
+
         }
+        
     }
 }
 
 
-struct VisualEffectView: UIViewRepresentable {
-    var effect: UIVisualEffect?
+struct VideoPlayerView: UIViewControllerRepresentable {
+    let player: AVPlayer
     
-    func makeUIView(context: UIViewRepresentableContext<Self>) -> UIVisualEffectView {
-        return UIVisualEffectView()
+    func makeUIViewController(context: Context) -> AVPlayerViewController {
+        let view = AVPlayerViewController()
+        view.player = player
+        view.showsPlaybackControls = false
+        view.videoGravity = .resizeAspectFill
+        
+        return view
     }
     
-    func updateUIView(_ uiView: UIVisualEffectView, context: UIViewRepresentableContext<Self>) {
-        uiView.effect = effect
-    }
+    func updateUIViewController(_ uiView: AVPlayerViewController, context: Context) {}
 }
