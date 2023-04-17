@@ -2,9 +2,9 @@ import SwiftUI
 
 struct GradientImageView : View {
     var image: Image
-    var height: CGFloat?
-    var width: CGFloat?
-    var style : UIBlurEffect.Style = .dark
+    var height: CGFloat
+    var width: CGFloat
+    var blurStyle : UIBlurEffect.Style = .dark
     
     var body: some View {
         ZStack(alignment: .bottom){
@@ -17,7 +17,7 @@ struct GradientImageView : View {
             VStack{}
                 .frame(width: width , height: height)
                 .background(
-                    VisualEffectView(effect: UIBlurEffect(style: style))
+                    VisualEffectView(effect: UIBlurEffect(style: blurStyle))
                         .preferredColorScheme(.dark)
                 )
             
